@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var productosRouter = require('./routes/productos');
 var CatalogoRouter = require('./routes/catalogo');
 var categoriaRouter = require('./routes/categoria');
+const db = require('./database');
 var app = express();
 
 // view engine setup
