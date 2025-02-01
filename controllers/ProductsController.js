@@ -1,19 +1,30 @@
 // controllers/productosController.js
 const db = require('../database');
 
+// Listar productos con sus categorías
 exports.listarProductos = (req, res) => {
-  db.all('SELECT * FROM productos', [], (err, productos) => {
+  // Obtener categorías
+  db.all('SELECT * FROM categorias', [], (err, categorias) => {
     if (err) {
       return res.status(500).send(err.message);
     }
-    res.render('productos', { title: 'MaxStore', productos });
+
+    // Obtener productos con sus categorías
+    db.all(`SELECT p.*, c.nombre AS categoria_nombre FROM productos p
+            LEFT JOIN categorias c ON p.categoria_id = c.id`, [], (err, productos) => {
+      if (err) {
+        return res.status(500).send(err.message);
+      }
+      // Renderizar la vista con productos y categorías
+      res.render('productos', { title: 'MaxStore', productos, categorias });
+    });
   });
 };
 
 // Crear producto
 exports.crearProducto = (req, res) => {
-  const { nombre, precio } = req.body;
-  db.run('INSERT INTO productos (nombre, precio) VALUES (?, ?)', [nombre, precio], function(err) {
+  const { nombre, precio, categoria_id } = req.body; // Asegúrate de que el formulario incluya categoria_id
+  db.run('INSERT INTO productos (nombre, precio, categoria_id) VALUES (?, ?, ?)', [nombre, precio, categoria_id], function(err) {
     if (err) {
       return res.status(500).send(err.message);
     }
@@ -23,8 +34,8 @@ exports.crearProducto = (req, res) => {
 
 // Actualizar producto
 exports.actualizarProducto = (req, res) => {
-  const { id, nombre, precio } = req.body;
-  db.run('UPDATE productos SET nombre = ?, precio = ? WHERE id = ?', [nombre, precio, id], function(err) {
+  const { id, nombre, precio, categoria_id } = req.body; // Asegúrate de que el formulario incluya categoria_id
+  db.run('UPDATE productos SET nombre = ?, precio = ?, categoria_id = ? WHERE id = ?', [nombre, precio, categoria_id, id], function(err) {
     if (err) {
       return res.status(500).send(err.message);
     }
