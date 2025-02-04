@@ -8,26 +8,26 @@
 <body>
     <div class="container">
         <h1>Productos</h1>
-        
-        <!-- Formulario para crear una nueva categoría -->
-        <h2>Crear Nueva Categoría</h2>
-        <form action="/categorias/crear" method="POST">
-            <input type="text" name="nombre" placeholder="Nombre de la categoría" required>
-            <button type="submit">Agregar Categoría</button>
-        </form>
-        
-        
-        <h2>Lista de Categorías</h2>
-        <ul>
-            <% categorias.forEach(categoria => { %>
-                <li>
-                    <%= categoria.nombre %>
-                    <form action="/categorias/eliminar/<%= categoria.id %>" method="GET" style="display:inline;">
-                        <button type="submit">Eliminar</button>
-                    </form>
-                </li>
-            <% }) %>
-        </ul>
+
+<!-- Formulario para crear una nueva categoría -->
+<h2>Crear Nueva Categoría</h2>
+<form action="/categorias/crear" method="POST">
+    <input type="text" name="nombre" placeholder="Nombre de la categoría" required>
+    <button type="submit">Agregar Categoría</button>
+</form>
+
+
+<h2>Lista de Categorías</h2>
+<ul>
+    <% categorias.forEach(categoria => { %>
+        <li>
+            <%= categoria.nombre %>
+            <form action="/categorias/eliminar/<%= categoria.id %>" method="GET" style="display:inline;">
+                <button type="submit">Eliminar</button>
+            </form>
+        </li>
+    <% }) %>
+</ul>
 
 
         <!-- Formulario para crear un nuevo producto -->
@@ -35,6 +35,7 @@
         <form action="/productos/crear" method="POST">
             <input type="text" name="nombre" placeholder="Nombre del producto" required>
             <input type="number" name="precio" placeholder="Precio" required>
+            <input type="text" name="imagen" placeholder="URL de la imagen" required>
             <select name="categoria_id" required>
                 <option value="">Selecciona una categoría</option>
                 <% categorias.forEach(categoria => { %>
@@ -48,6 +49,7 @@
             <% productos.forEach(producto => { %>
                 <li>
                     <%= producto.nombre %> - $<%= producto.precio %> (Categoría: <%= producto.categoria_nombre || 'Sin categoría' %>)
+                    <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" style="width: 100px; height: auto;">
                     <form action="/productos/eliminar/<%= producto.id %>" method="GET">
                         <button type="submit">Eliminar</button>
                     </form>

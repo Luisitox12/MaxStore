@@ -14,6 +14,7 @@ db.serialize(() => {
     nombre TEXT NOT NULL,
     precio REAL NOT NULL,
     categoria_id INTEGER,
+    imagen TEXT,
     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
   )`);
 });
