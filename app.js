@@ -11,6 +11,8 @@ var CatalogoRouter = require('./routes/catalogo');
 var categoriaRouter = require('./routes/categoria');
 var categoriasRouter = require('./routes/categorias');
 var accesoriosRouter = require('./routes/accesorios');
+var authRouter = require('./routes/auth');
+var carritoRouter = require('./routes/carrito');
 const db = require('./database');
 var app = express();
 
@@ -31,6 +33,8 @@ app.use('/catalogo', CatalogoRouter);
 app.use('/categoria', categoriaRouter);
 app.use('/categorias', categoriasRouter);
 app.use('/accesorios', accesoriosRouter);
+app.use('/auth', authRouter);
+app.use('/carrito', carritoRouter);
 // O si deseas servir todos los archivos estáticos desde 'views'
 app.use(express.static(path.join(__dirname, 'views')));
 
