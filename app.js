@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session'); // Importar express-session
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -13,8 +14,15 @@ var categoriasRouter = require('./routes/categorias');
 var accesoriosRouter = require('./routes/accesorios');
 var authRouter = require('./routes/auth');
 var carritoRouter = require('./routes/carrito');
-const db = require('./database');
+var db = require('./database');
 var app = express();
+
+// Configuración de sesión
+app.use(session({
+    secret: 'mi_secreto', // Cambiar a un secreto más seguro en producción
+    resave: false,
+    saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -25,8 +25,15 @@ exports.loginUser = (req, res) => {
         }
 
         if (bcrypt.compareSync(contraseña, user.contraseña)) {
-            // Aquí se puede establecer una sesión o token
-            res.redirect('/');
+            // Almacenar el email del usuario en la sesión
+            req.session.userEmail = user.email; // Guardar el email en la sesión
+            
+            // Redirigir según el tipo de usuario
+            if (user.email === 'admin@example.com') {
+                res.redirect('/productos'); // Redirigir al administrador
+            } else {
+                res.redirect('/'); // Redirigir a los usuarios regulares
+            }
         } else {
             res.status(401).send('Credenciales inválidas');
         }
@@ -36,6 +43,6 @@ exports.loginUser = (req, res) => {
 // Cerrar sesión
 exports.logoutUser = (req, res) => {
     // Aquí se puede manejar la lógica de cierre de sesión
-    // Por ejemplo, eliminar la sesión o el token
+    req.session.destroy(); // Destruir la sesión
     res.redirect('/'); // Redirigir al inicio después de cerrar sesión
 };
