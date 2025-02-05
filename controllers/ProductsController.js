@@ -15,6 +15,14 @@ exports.listarProductos = (req, res) => {
             if (err) {
                 return res.status(500).send(err.message);
             }
+
+            // Aplicar descuento del 50% a productos de FC Barcelona y Real Madrid
+            productos.forEach(producto => {
+                if (producto.categoria_nombre === 'FC Barcelona' || producto.categoria_nombre === 'Real Madrid') {
+                    producto.precio *= 0.5; // Aplicar descuento
+                }
+            });
+
             // Renderizar la vista con productos y categorías
             res.render('productos', { title: 'MaxStore', productos, categorias });
         });
