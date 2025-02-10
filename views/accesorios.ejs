@@ -30,44 +30,22 @@
 
    <section id="about" class="sec-about">
       <div class="container">
-        <h1></h1>
-        
+        <h1>Los Mejores Accesorios</h1>
 
-   <div class="row">
-          <div class="col-md-4">
-           <img class="center-block" src="img/adultdeportive/adult1.webp">
-            <h2>Camisa UCL</h2>
-                        <div class="clearfix">
-                            <div class="price pull-left">$19</div>
-                            <a href="/add-to-cart/5df3d1c33cdc1c2a142d9183" class="btn btn-raised btn-success pull-right">
-                             Añadir al carrito
-                            </a>
-                        </div>
-            </div>
-
-          <div class="col-md-4">
-           <img class="center-block" src="img/adultdeportive/adult3.webp"/>
-            <h2>Sueter UCL</h2>
-                        <div class="clearfix">
-                            <div class="price pull-left">$15</div>
-                            <a href="/add-to-cart/5dff3c83146b71261cb347b0" class="btn btn-raised btn-success pull-right">
-                              Añadir al carrito
-                            </a>
-                        </div>
-            </div>
-
-          <div class="col-md-4">
-           <img class="center-block" src="img/adultdeportive/adult2.webp"/>
-            <h2>Conjunto Deportivo</h2>
-                        <div class="clearfix">
-                            <div class="price pull-left">$42</div>
-                            <a href="/add-to-cart/5dff3d30146b71261cb347b1" class="btn btn-raised btn-success pull-right">
-                              Añadir al carrito
-                            </a>
-                        </div>
-            </div>
-
-        </div>
+        <div class="row">
+          <% productos.forEach(producto => { %>
+              <div class="col-md-4">
+                  <img class="center-block" src="<%= producto.imagen %>">
+                  <h2><%= producto.nombre %></h2>
+                  <div class="clearfix">
+                      <div class="price pull-left">$<%= producto.precio %></div>
+                      <a href="/add-to-cart/<%= producto.id %>" class="btn btn-raised btn-success pull-right">
+                          Añadir al carrito
+                      </a>
+                  </div>
+              </div>
+          <% }); %>
+      </div>
      </section>
  <footer id="footer">
        <div class="container">

@@ -1,65 +1,73 @@
-/*----- Categories -----*/
-
-#head{
-    font-size: 36px;
+/*=Typography=*/
+html {
+      font-size: 16px;
   }
   
-  .button {
-        padding: 4px;
-        text-align: center;
-  }
-    
-  .button ul {
-        clear: both;
-        margin: 15px 0 20px;
-        padding:0;
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-  }
-    
-  #coll-3 ul li {
-        width: 30%;
-  }
-    
-  .button li {
-        font-size: 0.9em;
-        font-weight: 500;
-        line-height: 1.3em;
-        text-align: center;
-        background: #ffffff;
-        border-radius: 5px;
-        margin: 5px 0;
-        box-sizing: border-box;
-        box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-        padding: 10px 0 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;      
-        transition: 2s;
-  }
-    
-  .button li a {
-        display: block;
-        text-decoration: none;
-        color: #333;
-  }
-    
-  .button li svg {
-        margin: 3px 0;
-        width: 35px;
-        height: 35px;
-        fill: #26ae61;
-        display: inline-block;
-  }
-    
-  .button li span {
-        display: block;
-        padding: 0 3px;
+  body {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 300;
+      margin: 0;
+      padding: 0;
+      margin-top: 100px;
   }
   
-  .button ul :hover{
-    background-color: #b31f55;
-    color: white;
+  h1#head {
+      font-weight: 300;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+  }
+  
+  ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      text-align: center;
+  }
+  
+  ul li {
+      margin: 1rem 0;
+  }
+  
+  ul li a {
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.25s;
+  }
+  
+  ul li a:hover {
+      color: #4073ff; /* Color al pasar el mouse */
+  }
+  
+  /* Estilo para el botón de regresar */
+  .button a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #fefefe;
+      border: 1px solid #e6e6e6;
+      border-radius: 5px;
+      text-transform: uppercase;
+      color: #333;
+      transition: background-color 0.25s, color 0.25s;
+  }
+  
+  .button a:hover {
+      background-color: #e6e6e6;
+      color: #000;
+  }
+  
+  /* Media Queries */
+  @media screen and (max-width: 768px) {
+      body {
+          margin-top: 50px; /* Reduce el margen superior en pantallas pequeñas */
+      }
+  
+      h1#head {
+          font-size: 24px; /* Ajusta el tamaño de la fuente del encabezado */
+      }
+  
+      ul li a {
+          font-size: 14px; /* Ajusta el tamaño de la fuente de los enlaces */
+      }
   }
