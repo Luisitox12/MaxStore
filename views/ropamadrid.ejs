@@ -25,12 +25,12 @@
              </div>
          </nav>  
     <section id="home" class="sec-main">
-      <h1 class="main-heading">El mejor estilo para caballero</h1>
+      <h1 class="main-heading">Al Estilo del Merengue</h1>
     </section>
 
    <section id="about" class="sec-about">
       <div class="container">
-        <h1>Caballeros</h1>
+        <h1>Real Madrid</h1>
 
         <div class="row">
           <% productos.forEach(producto => { %>
@@ -38,7 +38,10 @@
                   <img class="center-block" src="<%= producto.imagen %>">
                   <h2><%= producto.nombre %></h2>
                   <div class="clearfix">
-                      <div class="price pull-left">$<%= producto.precio %></div>
+                    <div class="price pull-left">
+                      <span style="text-decoration: line-through;">$<%= producto.precio_original %></span> 
+                      $<%= producto.precio %>
+                  </div>
                       <a href="/add-to-cart/<%= producto.id %>" class="btn btn-raised btn-success pull-right">
                           Añadir al carrito
                       </a>
