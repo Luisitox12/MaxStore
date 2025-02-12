@@ -32,7 +32,11 @@
       <p class="main-header__txt"><i class="fas fa-phone"></i> +58 4142978765</p>
     </div>
     <div class="main-header__container">
-      <a href="/auth" class="main-header__link"><i class="fas fa-user"></i></a>
+      <% if (session && session.userEmail === 'admin@example.com') { %>
+  <a href="/productos" class="main-header__link"><i class="fas fa-user"></i></a>
+<% } else { %>
+  <a href="/auth" class="main-header__link"><i class="fas fa-user"></i></a>
+<% } %>
       <a href="/carrito" class="main-header__btn">Mi carrito <i class="fas fa-shopping-cart"></i></a>
     </div>
   </div>
