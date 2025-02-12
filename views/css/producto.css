@@ -102,6 +102,13 @@ img {
     margin: 20px 0; /* Espaciado superior e inferior */
 }
 
+/* Centrar el botón de Cerrar Sesión */
+.regresar-ini{
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
 /* Media Queries */
 @media screen and (max-width: 768px) {
     form {
