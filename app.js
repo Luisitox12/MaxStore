@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session'); // Importar express-session
-
+var flash = require('connect-flash'); // Importar connect-flash
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productosRouter = require('./routes/productos');
@@ -38,8 +38,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash()); // Usar connect-flash
 
-app.use('/', indexRouter);
+app.use('/', indexRouter); // Usar el router de index
+
 app.use('/users', usersRouter);
 app.use('/productos', productosRouter);
 app.use('/catalogo', CatalogoRouter);

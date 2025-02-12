@@ -9,7 +9,10 @@ function checkAdmin(req, res, next) {
     if (userEmail === 'admin@example.com') {
         return next(); // El usuario es administrador, continuar
     }
-    return res.status(403).send('Acceso denegado'); // Acceso denegado
+    req.flash('error', 'Acceso denegado, para acceder a productos inicie sesion como administrador'); // Establecer mensaje flash
+    return res.redirect('/'); // Redirigir a la página de inicio
+
+
 }
 
 // Ruta para listar productos
