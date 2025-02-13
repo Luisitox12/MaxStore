@@ -22,7 +22,7 @@ var madridRouter = require('./routes/madrid');
 var db = require('./database');
 var app = express();
 
-
+// Configuración de sesión
 app.use(session({
     secret: 'mi_secreto', 
     resave: false,

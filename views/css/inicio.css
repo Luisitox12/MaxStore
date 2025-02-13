@@ -29,7 +29,7 @@ img {
   color: #333;
 }
 
-/* Estilos del Menu */
+
 .main-nav {
   opacity: 0;
   visibility: hidden;
@@ -94,7 +94,7 @@ img {
   padding: 0 20px;
 }
 
-/* ESTILOS DE SLIDER */
+
 .container-slider{
   margin: 50px 0;
   position: relative;
@@ -185,7 +185,7 @@ img {
   background: #FF4E00;
   color: white;
 }
-/* ESTILOS DE PRODUCTOS */
+
 .container-products {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -337,7 +337,7 @@ img {
   color: #555;
 }
 
-/*Estilos para tablet*/
+
 @media screen and (min-width:768px) {
   .slider{
     height: 400px;
@@ -351,7 +351,7 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-/*Estilos para web*/
+
 
 @media screen and (min-width:1024px) { 
   .container{

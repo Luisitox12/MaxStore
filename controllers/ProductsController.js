@@ -1,37 +1,35 @@
-// controllers/productosController.js
 const db = require('../database');
 
-// Listar productos con sus categorías
 exports.listarProductos = (req, res) => {
-    // Obtener categorías
+   
     db.all('SELECT * FROM categorias', [], (err, categorias) => {
         if (err) {
             return res.status(500).send(err.message);
         }
 
-        // Obtener productos con sus categorías
+        
         db.all(`SELECT p.*, c.nombre AS categoria_nombre FROM productos p
                 LEFT JOIN categorias c ON p.categoria_id = c.id`, [], (err, productos) => {
             if (err) {
                 return res.status(500).send(err.message);
             }
 
-            // Aplicar descuento del 50% a productos de FC Barcelona y Real Madrid
+           
             productos.forEach(producto => {
                 if (producto.categoria_nombre === 'FC Barcelona' || producto.categoria_nombre === 'Real Madrid') {
-                    producto.precio *= 0.5; // Aplicar descuento
+                    producto.precio *= 0.5; 
                 }
             });
 
-            // Renderizar la vista con productos y categorías
+            
             res.render('productos', { title: 'MaxStore', productos, categorias });
         });
     });
 };
 
-// Crear producto
+
 exports.crearProducto = (req, res) => {
-    const { nombre, precio, categoria_id, imagen } = req.body; // Asegúrate de que el formulario incluya imagen
+    const { nombre, precio, categoria_id, imagen } = req.body; 
     db.run('INSERT INTO productos (nombre, precio, categoria_id, imagen) VALUES (?, ?, ?, ?)', [nombre, precio, categoria_id, imagen], function(err) {
         if (err) {
             return res.status(500).send(err.message);
@@ -40,9 +38,9 @@ exports.crearProducto = (req, res) => {
     });
 };
 
-// Actualizar producto
+
 exports.actualizarProducto = (req, res) => {
-    const { id, nombre, precio, categoria_id, imagen } = req.body; // Asegúrate de que el formulario incluya imagen
+    const { id, nombre, precio, categoria_id, imagen } = req.body; 
     db.run('UPDATE productos SET nombre = ?, precio = ?, categoria_id = ?, imagen = ? WHERE id = ?', [nombre, precio, categoria_id, imagen, id], function(err) {
         if (err) {
             return res.status(500).send(err.message);
@@ -51,7 +49,7 @@ exports.actualizarProducto = (req, res) => {
     });
 };
 
-// Eliminar producto
+
 exports.eliminarProducto = (req, res) => {
     const { id } = req.params;
     db.run('DELETE FROM productos WHERE id = ?', id, function(err) {

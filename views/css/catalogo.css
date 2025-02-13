@@ -84,14 +84,14 @@ hr {
     width: 7%;
 }
 
-/*=Layout=*/
+
 .sec-folio .row {
     margin-bottom: 3em;
 }
 .sec-folio img {
     max-width: 100%;
 }
-/*Main*/
+
 .sec-main {
     position: relative;
     height: 200px;
@@ -122,7 +122,7 @@ hr {
     color: #fff;
 }
 
-/*Footer*/
+
 footer {
     background: rgb(0, 0, 0);
 }

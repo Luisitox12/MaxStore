@@ -1,8 +1,8 @@
 const db = require('../database');
 
-// Obtener productos de la categoría accesorios
+
 exports.listarCaballero = (req, res) => {
-    console.log("Fetching products for Ropa Caballeros category"); // Debugging log
+    console.log("Fetching products for Ropa Caballeros category"); 
     db.all(`SELECT p.* FROM productos p
 
             JOIN categorias c ON p.categoria_id = c.id
