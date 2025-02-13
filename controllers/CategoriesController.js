@@ -1,13 +1,13 @@
 const db = require('../database');
 
-// Crear categoría
+
 exports.crearCategoria = (req, res) => {
     const { nombre } = req.body;
     db.run('INSERT INTO categorias (nombre) VALUES (?)', [nombre], function(err) {
         if (err) {
             return res.status(500).send(err.message);
         }
-        res.redirect('/productos'); // Redirigir a la página de productos
+        res.redirect('/productos'); 
     });
 };
 
@@ -18,7 +18,7 @@ exports.eliminarCategoria = (req, res) => {
         if (err) {
             return res.status(500).send(err.message);
         }
-        res.redirect('/productos'); // Redirigir a la página de productos
+        res.redirect('/productos'); 
     });
 };
 

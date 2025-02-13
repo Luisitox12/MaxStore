@@ -1,8 +1,8 @@
 const db = require('../database');
 
-// Obtener productos de la categoría accesorios
+
 exports.listarBarca = (req, res) => {
-    console.log("Fetching products for Ropa Barca category"); // Debugging log
+    console.log("Fetching products for Ropa Barca category"); 
 
     db.all(`SELECT p.* FROM productos p
             JOIN categorias c ON p.categoria_id = c.id
@@ -14,8 +14,8 @@ exports.listarBarca = (req, res) => {
 
         // Guardar el precio original
         productos.forEach(producto => {
-            producto.precio_original = producto.precio; // Guardar precio original
-            producto.precio *= 0.5; // Aplicar descuento
+            producto.precio_original = producto.precio; 
+            producto.precio *= 0.5; 
         });
 
 

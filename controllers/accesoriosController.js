@@ -1,6 +1,6 @@
 const db = require('../database');
 
-// Obtener productos de la categoría accesorios
+
 exports.listarAccesorios = (req, res) => {
     db.all(`SELECT p.* FROM productos p
             JOIN categorias c ON p.categoria_id = c.id

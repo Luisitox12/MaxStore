@@ -1,7 +1,7 @@
 a, .sec-contact .btn {
     transition: all 0.25s;
 }
-/*=Typography=*/
+
 html {
     font-size: 16px;
 }
@@ -91,7 +91,7 @@ hr {
 .sec-folio img {
     max-width: 100%;
 }
-/*Main*/
+
 .sec-main {
     position: relative;
     height: 200px;
@@ -169,7 +169,7 @@ footer {
     height: 22px;
     padding:0px;
     font-size: 9px;
-    line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+    line-height: 1.5; 
     border-radius: 3px;
 }
 .searchbutton {
