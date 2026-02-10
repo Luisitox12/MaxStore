@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= servicio.nombre %> | GTT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root { --primary-red: #d32f2f; --text-black: #333; }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; color: var(--text-black); }
+        a { text-decoration: none; color: inherit; }
+
+        header { padding: 15px 20px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 1.1rem; }
+        .btn-back { font-size: 0.9rem; color: #666; }
+
+        .hero-service { width: 100%; height: 50vh; object-fit: cover; }
+
+        .content-wrapper {
+            max-width: 1100px; margin: 0 auto; padding: 40px 20px;
+            display: grid; grid-template-columns: 2fr 1fr; gap: 40px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 5px; }
+        .category-tag { background: #eee; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; }
+        .description { font-size: 1.1rem; line-height: 1.8; color: #555; margin-top: 20px; }
+        .extra-img { width: 100%; border-radius: 10px; margin-top: 20px; }
+
+        .contact-box { background: white; border: 1px solid #eee; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); height: fit-content; }
+        .info-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .promo-banner { background: #fff3e0; color: #e65100; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; }
+        
+        .btn-action { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 50px; font-weight: bold; margin-bottom: 10px; }
+        .btn-call { background: var(--primary-red); color: white; }
+        .btn-map { background: white; border: 2px solid #ddd; color: #333; }
+
+        /* --- MÓVIL --- */
+        @media (max-width: 768px) {
+            .hero-service { height: 35vh; }
+            .content-wrapper { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+            .contact-box { margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">Guárico<span>TechTur</span></a>
+        <a href="/" class="btn-back"><i class="fas fa-arrow-left"></i> Volver</a>
+    </header>
+
+    <img src="<%= servicio.imagen %>" class="hero-service">
+
+    <div class="content-wrapper">
+        <div class="main-info">
+            <span class="category-tag"><%= servicio.categoria %></span>
+            <h1><%= servicio.nombre %></h1>
+            <p class="description"><%= servicio.descripcion %></p>
+            <% if(servicio.imagen_extra) { %> <img src="<%= servicio.imagen_extra %>" class="extra-img"> <% } %>
+        </div>
+
+        <aside>
+            <div class="contact-box">
+                <% if(servicio.promocion) { %>
+                    <div class="promo-banner"><i class="fas fa-gift"></i> <%= servicio.promocion %></div>
+                <% } %>
+                <div class="info-row">
+                    <i class="far fa-clock" style="color: #d32f2f; margin-top: 3px;"></i>
+                    <div><strong>Horario</strong><br><span><%= servicio.horario || 'Consultar' %></span></div>
+                </div>
+                <div class="info-row">
+                    <i class="fas fa-map-marker-alt" style="color: #d32f2f; margin-top: 3px;"></i>
+                    <div><strong>Dirección</strong><br><span><%= servicio.direccion || 'San Juan' %></span></div>
+                </div>
+                <a href="tel:<%= servicio.contacto %>" class="btn-action btn-call">Llamar Ahora</a>
+                <a href="<%= servicio.mapa_url %>" target="_blank" class="btn-action btn-map">Cómo llegar</a>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>
