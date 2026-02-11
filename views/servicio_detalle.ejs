@@ -75,7 +75,9 @@
                     <div><strong>Dirección</strong><br><span><%= servicio.direccion || 'San Juan' %></span></div>
                 </div>
                 <a href="tel:<%= servicio.contacto %>" class="btn-action btn-call">Llamar Ahora</a>
-                <a href="<%= servicio.mapa_url %>" target="_blank" class="btn-action btn-map">Cómo llegar</a>
+                <a href="/mapa?lat=<%= servicio.lat %>&lng=<%= servicio.lng %>&nombre=<%= servicio.nombre %>" class="btn-ruta">
+                    📍 Cómo llegar (Ver Ruta)
+                </a>
             </div>
         </aside>
     </div>

@@ -4,80 +4,125 @@ const path = require('path');
 const dbPath = path.resolve(__dirname, 'gtt_turismo.db');
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) console.error(err.message);
-    else console.log('--> BD Guárico TechTur Conectada');
+    else console.log('--> BD GTT (FUSIÓN FINAL: Textos + GPS) Conectada');
 });
 
 db.serialize(() => {
-    // LIMPIEZA
+    // 1. LIMPIEZA
     db.run("DROP TABLE IF EXISTS atractivos");
     db.run("DROP TABLE IF EXISTS servicios");
     db.run("DROP TABLE IF EXISTS reportes");
 
-    // TABLA 1: ATRACTIVOS
+    // 2. CREAR TABLAS (AQUÍ AGREGAMOS LAS COLUMNAS lat Y lng)
     db.run(`CREATE TABLE atractivos (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT, tipo TEXT, descripcion TEXT, historia TEXT, tips TEXT, estado_ruta TEXT, coordenadas TEXT, imagen TEXT, imagen_secundaria TEXT
+        nombre TEXT, tipo TEXT, descripcion TEXT, historia TEXT, tips TEXT, estado_ruta TEXT, 
+        lat REAL, lng REAL, imagen TEXT, imagen_secundaria TEXT
     )`);
 
-    // TABLA 2: SERVICIOS (Expandida)
     db.run(`CREATE TABLE servicios (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT, 
-        categoria TEXT, 
-        contacto TEXT, 
-        promocion TEXT, 
-        descripcion TEXT,  -- Nuevo: Detalle del servicio
-        horario TEXT,      -- Nuevo: 8:00 AM - 9:00 PM
-        direccion TEXT,    -- Nuevo: Ubicación exacta
-        mapa_url TEXT,     -- Nuevo: Link Google Maps
-        imagen TEXT,
-        imagen_extra TEXT  -- Nuevo: Foto del plato/habitación
+        nombre TEXT, categoria TEXT, contacto TEXT, promocion TEXT, descripcion TEXT, horario TEXT, direccion TEXT, 
+        lat REAL, lng REAL, imagen TEXT, imagen_extra TEXT
     )`);
     
     db.run(`CREATE TABLE reportes (id INTEGER PRIMARY KEY, mensaje TEXT)`);
 
-    // --- SEEDING (Datos) ---
-    // 1. ATRACTIVOS (Los mismos de antes)
-    const stmtAtractivos = db.prepare("INSERT INTO atractivos (nombre, tipo, descripcion, historia, tips, estado_ruta, coordenadas, imagen, imagen_secundaria) VALUES (?,?,?,?,?,?,?,?,?)");
-    stmtAtractivos.run("Balneario El Castrero", "Naturaleza", "Aguas cristalinas.", "Historia del balneario...", "Llevar repelente.", "Habilitada", "https://goo.gl/maps/Castrero", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/El_Castrero.jpg/800px-El_Castrero.jpg", "https://mapio.net/images-p/12975326.jpg");
-    stmtAtractivos.run("Monumento Sanjuanote", "Patrimonio", "El San Juan más alto.", "Historia del monumento...", "Ir al atardecer.", "Habilitada", "https://goo.gl/maps/Sanjuanote", "https://upload.wikimedia.org/wikipedia/commons/2/22/Sanjuanote.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/San_Juan_de_los_Morros.jpg/1280px-San_Juan_de_los_Morros.jpg");
-    stmtAtractivos.run("Aguas Termales", "Salud", "Piscinas sulfurosas.", "Historia termal...", "Llevar traje baño viejo.", "Precaución", "https://goo.gl/maps/Termales", "https://hotelandes.com/wp-content/uploads/2017/04/aguas-termales.jpg", "https://hotelandes.com/wp-content/uploads/2017/04/aguas-termales.jpg");
+    // --- 3. SEEDING: ATRACTIVOS TURÍSTICOS ---
+    const stmtAtractivos = db.prepare("INSERT INTO atractivos (nombre, tipo, descripcion, historia, tips, estado_ruta, lat, lng, imagen, imagen_secundaria) VALUES (?,?,?,?,?,?,?,?,?,?)");
+    
+    // 1. LOS MORROS (9.9166, -67.3980)
+    stmtAtractivos.run(
+        "Mon. Natural Arístides Rojas", "Naturaleza / Icono", "Los famosos Morros de San Juan.", 
+        "Formaciones geológicas de roca caliza arrecifal de hace 80 millones de años. Son el emblema del estado Guárico.",
+        "Ideal para fotos panorámicas. | Escalada con equipos.", "Habilitada", 
+        9.9166, -67.3980, 
+        "/images/morros.jpg", "/images/morros.jpg"
+    );
+
+    // 2. MIRADOR TEOBALDO MIERES (9.9056, -67.3553)
+    stmtAtractivos.run(
+        "Mirador Teobaldo Mieres", "Vista Panorámica", "Hogar de la Beata Candelaria.", 
+        "Punto más alto de la ciudad urbana. Alberga el monumento a la Beata Madre Candelaria (24m).", 
+        "Entrada libre. | Clima ventoso.", "Habilitada", 
+        9.9056, -67.3553, 
+        "/images/mirador.jpg", "/images/mirador.jpg"
+    );
+
+    // 3. PICO PLATILLÓN (9.8700, -67.5100)
+    stmtAtractivos.run(
+        "Pico Platillón", "Montaña / Aventura", "La cumbre más alta de Guárico.", 
+        "Reserva de selva nublada vital para la hidrografía. Contrasta con el calor del llano.", 
+        "Acceso solo en 4x4. | Requiere permiso.", "Solo 4x4", 
+        9.8700, -67.5100, 
+        "/images/platillon.jpg", "/images/platillon.jpg"
+    );
+
+    // 4. EL CASTRERO (9.9480, -67.3230)
+    stmtAtractivos.run(
+        "Balneario El Castrero", "Naturaleza", "Aguas cristalinas de manantial.", 
+        "El balneario clásico de los sanjuaneros. Sus aguas bajan directamente de la montaña.",
+        "Lleva repelente. | Evita el vidrio.", "Habilitada", 
+        9.9480, -67.3230, 
+        "/images/castrero.jpg", "/images/castrero.jpg"
+    );
+
+    // 5. SANJUANOTE (9.9125, -67.3591)
+    stmtAtractivos.run(
+        "Monumento Sanjuanote", "Patrimonio", "El Coloso de Guárico (19.8m).", 
+        "Construido en 1935, es el San Juan Bautista más alto de Venezuela.",
+        "Estacionamiento disponible.", "Habilitada", 
+        9.9125, -67.3591, 
+        "/images/sanjuanote.jpg", "/images/sanjuanote.jpg"
+    );
     stmtAtractivos.finalize();
 
-    // 2. SERVICIOS (Datos Nuevos Completos)
-    const stmtServicios = db.prepare("INSERT INTO servicios (nombre, categoria, contacto, promocion, descripcion, horario, direccion, mapa_url, imagen, imagen_extra) VALUES (?,?,?,?,?,?,?,?,?,?)");
+    // --- 4. SEEDING: SERVICIOS (TUS COMPAÑEROS + GPS) ---
+    const stmtServicios = db.prepare("INSERT INTO servicios (nombre, categoria, contacto, promocion, descripcion, horario, direccion, lat, lng, imagen, imagen_extra) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
     
-    // HOTEL LOS MORROS
+    // 1. SABOR Y SAZÓN EXPRESS (Casco Central: 9.9100, -67.3550)
     stmtServicios.run(
-        "Hotel Los Morros", "Hospedaje", "0246-5551234", "10% OFF Turistas", 
-        "Disfruta de la mejor estadía en el corazón de San Juan. Habitaciones con aire acondicionado, Wi-Fi de alta velocidad y desayuno criollo incluido.",
-        "Recepción 24 Horas",
-        "Av. Bolívar, frente a la Plaza Bolívar.",
-        "https://goo.gl/maps/Hotel",
-        "https://cf.bstatic.com/xdata/images/hotel/max1024x768/467790695.jpg?k=23075c3f915743407981328052150935574301646d755452d334515570530737&o=&hp=1",
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/9e/2b/habitacion-doble.jpg?w=700&h=-1&s=1"
+        "Sabor y Sazón Express", "Pizzería / Rápida", "0414-1234567", "Refresco Gratis", 
+        "Punto de encuentro favorito. Pizzas artesanales y la mejor comida rápida.",
+        "11:00 AM - 10:00 PM", "Casco Central.", 
+        9.9100, -67.3550, 
+        "/images/sabor.jpg", "/images/sabor.jpg"
     );
 
-    // RESTAURANTE EL LLANO
+    // 2. POLLO A LA BROSTER MI COMIDA (Av Bolívar: 9.9090, -67.3560)
     stmtServicios.run(
-        "Restaurante El Llano", "Gastronomía", "0414-1234567", "Jugo Gratis", 
-        "La auténtica carne en vara llanera. Especialidad en cachapas con queso de mano y sancocho de res. Ambiente familiar con música en vivo los fines de semana.",
-        "11:00 AM - 10:00 PM",
-        "Calle Mellado, cruce con Av. Miranda.",
-        "https://goo.gl/maps/Restaurante",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Carne_en_vara.jpg/1280px-Carne_en_vara.jpg",
-        "https://pbs.twimg.com/media/D4z_5wWW4AA5j-_.jpg"
+        "Pollo a la Broster Mi Comida", "Comida Rápida", "0412-1234567", "Combo Familiar", 
+        "Sabor tradicional en San Juan. Pollo crujiente y jugoso.",
+        "11:00 AM - 10:00 PM", "Av. Bolívar / Centro.", 
+        9.9090, -67.3560, 
+        "/images/broster_micomida.jpg", "/images/broster_micomida.jpg"
     );
 
-    // TRANSPORTE
+    // 3. TROPIPIZZA (Calle Mellado: 9.9105, -67.3580)
     stmtServicios.run(
-        "Ruta Express Castrero", "Transporte", "0412-9876543", "Salida c/30min", 
-        "Servicio de transporte rústico seguro y confiable para subir al balneario El Castrero. Conductores certificados y vehículos revisados.",
-        "7:00 AM - 5:00 PM",
-        "Terminal de Pasajeros, Andén 4.",
-        "https://goo.gl/maps/Terminal",
-        "https://upload.wikimedia.org/wikipedia/commons/2/27/Jeep_Wrangler_YJ_Rio_Grande_ar.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/2/27/Jeep_Wrangler_YJ_Rio_Grande_ar.jpg"
+        "Tropipizza", "Pizzería", "0246-4310000", "Refresco 2L", 
+        "Pizzería emblemática. Masa gruesa, full ingredientes y ambiente familiar.",
+        "12:00 PM - 11:00 PM", "Calle Mellado / Centro.", 
+        9.9105, -67.3580, 
+        "/images/tropipizza.jpg", "/images/tropipizza.jpg"
+    );
+
+    // 4. REST. EL CABALLO ESPAÑOL (Av Los Llanos: 9.9000, -67.3500)
+    stmtServicios.run(
+        "Rest. El Caballo Español", "Internacional", "0246-4318888", "Paella Domingos", 
+        "Un rincón de España en el llano. Paellas y mariscos frescos.",
+        "12:00 PM - 10:00 PM", "Av. Los Llanos.", 
+        9.9000, -67.3500, 
+        "/images/caballo.jpg", "/images/caballo.jpg"
+    );
+
+    // 5. ASOBROSTE (Zona Centro: 9.9110, -67.3570)
+    stmtServicios.run(
+        "Asobroste", "Comida Rápida", "0414-9999999", "Pollo + Papas", 
+        "La asociación del buen sabor. Pollo frito clásico.",
+        "10:00 AM - 9:00 PM", "Zona Centro.", 
+        9.9110, -67.3570, 
+        "/images/asobroste.jpg", "/images/asobroste.jpg"
     );
     
     stmtServicios.finalize();

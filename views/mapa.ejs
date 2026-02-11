@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ruta a <%= nombre %></title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    
+    <style>
+        /* Reset básico */
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
+        
+        /* El mapa ocupa toda la pantalla */
+        #map { height: 100%; width: 100%; }
+
+        /* Contenedor flotante para los botones */
+        .map-ui {
+            position: absolute;
+            top: 20px;
+            right: 20px; /* Aquí movemos todo a la DERECHA */
+            z-index: 9999; /* Por encima del mapa */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Estilo del Botón "Volver" */
+        .btn-volver {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px); /* Efecto vidrio moderno */
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .btn-volver:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #fff;
+        }
+
+        /* AJUSTES RESPONSIVOS (Móvil) */
+        @media (max-width: 600px) {
+            .map-ui {
+                top: auto; 
+                bottom: 30px; /* En celular, a veces es mejor abajo para el dedo */
+                right: 20px;
+                left: 20px; /* Que ocupe el ancho */
+            }
+            
+            .btn-volver {
+                width: 100%; /* Botón grande y fácil de tocar */
+                text-align: center;
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            /* Ocultamos las instrucciones de texto de Leaflet en móvil para que no estorben */
+            .leaflet-routing-container {
+                display: none !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-ui">
+        <a href="javascript:history.back()" class="btn-volver">
+            ❌ Cerrar Mapa
+        </a>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        // Recibimos los datos (Usamos comillas y parseFloat para evitar errores)
+        const destinoLat = parseFloat("<%= lat %>");
+        const destinoLng = parseFloat("<%= lng %>");
+        const nombreLugar = "<%= nombre %>";
+
+        // Inicializar Mapa
+        const map = L.map('map').setView([destinoLat, destinoLng], 15);
+
+        // Capa Visual (Estilo Google Maps limpio)
+        L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0','mt1','mt2','mt3']
+        }).addTo(map);
+
+        // Marcador del Destino (Rojo)
+        const iconoRojo = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        L.marker([destinoLat, destinoLng], {icon: iconoRojo}).addTo(map)
+            .bindPopup(`<b>${nombreLugar}</b><br>Destino Final`).openPopup();
+
+        // Geolocalización y Ruta
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+
+                // Trazar Ruta
+                L.Routing.control({
+                    waypoints: [
+                        L.latLng(userLat, userLng),
+                        L.latLng(destinoLat, destinoLng)
+                    ],
+                    language: 'es',
+                    routeWhileDragging: false,
+                    addWaypoints: false, // Evita que el usuario añada puntos extra por error
+                    draggableWaypoints: false,
+                    fitSelectedRoutes: true,
+                    lineOptions: {
+                        styles: [{color: '#4285F4', opacity: 0.8, weight: 6}] // Azul Google Maps
+                    },
+                    createMarker: function() { return null; } // No crear marcadores extraños de inicio
+                }).addTo(map);
+
+            }, (error) => {
+                console.log(error);
+                alert("No pudimos detectar tu ubicación. Verifica que el GPS esté activo.");
+            });
+        } else {
+            alert("Tu navegador no soporta geolocalización.");
+        }
+    </script>
+</body>
+</html>

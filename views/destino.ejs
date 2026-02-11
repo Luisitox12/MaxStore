@@ -73,7 +73,9 @@
                     <strong>Tips de Viaje</strong><br>
                     <small><%= lugar.tips || 'Llevar hidratación.' %></small>
                 </div>
-                <a href="<%= lugar.coordenadas %>" target="_blank" class="btn-map">Ver en Mapa</a>
+                <a href="/mapa?lat=<%= lugar.lat %>&lng=<%= lugar.lng %>&nombre=<%= lugar.nombre %>" class="btn-ruta">
+                    📍 Cómo llegar (Ver Ruta)
+                </a>
             </div>
         </aside>
     </div>
