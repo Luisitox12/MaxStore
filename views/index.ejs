@@ -8,94 +8,96 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS BASE --- */
-        :root { --primary-red: #d32f2f; --text-black: #333; --text-grey: #666; --bg-white: #fff; --bg-light: #f9f9f9; }
+        /* --- NUEVA PALETA DE COLORES --- */
+        :root { 
+            --primary-blue: #2C5F78; /* Azul Petróleo (Logo) */
+            --accent-gold: #D9A54C;  /* Dorado (Morros) */
+            --text-black: #333; 
+            --text-grey: #666; 
+            --bg-white: #fff; 
+            --bg-light: #F7F9FB; 
+        }
+        
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Noto Sans JP', sans-serif; color: var(--text-black); background-color: var(--bg-white); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
-        /* --- HEADER RESPONSIVO --- */
+        /* --- HEADER --- */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 15px 40px;
+            background: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(44, 95, 120, 0.2);
+            padding: 10px 40px;
             display: flex; justify-content: space-between; align-items: center;
             transition: 0.3s;
         }
-        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
-        .logo span { color: var(--primary-red); }
+        
+        .logo img { height: 50px; width: auto; display: block; background: white; padding: 2px; border-radius: 5px; }
+        
         nav ul { display: flex; gap: 30px; }
-        nav a { font-weight: 500; font-size: 0.9rem; letter-spacing: 0.5px; }
-        nav a:hover { color: var(--primary-red); }
+        nav a { font-weight: 500; font-size: 0.95rem; letter-spacing: 0.5px; color: white; opacity: 0.9; }
+        nav a:hover { color: var(--accent-gold); opacity: 1; }
 
         /* --- HERO --- */
         .hero {
             height: 90vh; 
-            /* Fíjate que ahora apunta a /images/portada.jpg */
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('/images/portada.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(44, 95, 120, 0.4), rgba(44, 95, 120, 0.6)), url('/images/portada.jpg') no-repeat center center/cover;
             display: flex; align-items: center; justify-content: center; text-align: center; color: white;
             padding: 0 20px;
         }
         .hero-content { max-width: 800px; z-index: 2; }
         .hero h1 { font-size: 4rem; font-weight: 700; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
         .hero p { font-size: 1.5rem; margin-bottom: 30px; font-weight: 300; }
-        .btn-japan { background: var(--primary-red); color: white; padding: 15px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; }
+        
+        .btn-japan { background: var(--accent-gold); color: white; padding: 15px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(217, 165, 76, 0.4); }
+        .btn-japan:hover { background: #c59342; transform: translateY(-3px); }
 
         /* --- GRID --- */
         .section { padding: 80px 40px; max-width: 1400px; margin: 0 auto; }
         .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
-        .divider { width: 60px; height: 3px; background: var(--primary-red); margin: 0 auto; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary-blue); }
+        .divider { width: 60px; height: 3px; background: var(--accent-gold); margin: 0 auto; }
 
         .grid-japan {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 300px es mejor para móviles */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
 
-        .card-japan { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: block; }
-        .card-japan:hover { transform: translateY(-10px); }
+        .card-japan { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: block; border: 1px solid #eee; }
+        .card-japan:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(44, 95, 120, 0.15); }
         .card-img-wrapper { height: 220px; overflow: hidden; }
         .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .card-japan:hover img { transform: scale(1.1); }
         .card-content { padding: 25px; }
-        .card-title { font-size: 1.3rem; font-weight: 700; margin: 5px 0 10px; }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin: 5px 0 10px; color: var(--primary-blue); }
         
-        .tag { font-size: 0.75rem; text-transform: uppercase; color: var(--text-grey); letter-spacing: 1px; }
+        .tag { font-size: 0.75rem; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 1px; font-weight: bold; }
         .status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
         .dot-green { background: #4CAF50; box-shadow: 0 0 5px #4CAF50; }
         .dot-yellow { background: #FFC107; box-shadow: 0 0 5px #FFC107; }
-        .promo-badge { background: #fff3e0; color: #e65100; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-left: 10px; }
+        .promo-badge { background: #FFF8E1; color: var(--accent-gold); font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-left: 10px; border: 1px solid var(--accent-gold); }
 
         /* --- FORM --- */
         .report-form { display: flex; gap: 10px; max-width: 500px; margin: 0 auto; }
-        .input-japan { flex: 1; padding: 15px; border: 1px solid #ddd; border-radius: 50px; outline: none; }
-        .btn-round { width: 50px; height: 50px; border-radius: 50%; background: var(--text-black); color: white; border: none; cursor: pointer; }
+        .input-japan { flex: 1; padding: 15px; border: 2px solid #eee; border-radius: 50px; outline: none; transition: 0.3s; }
+        .input-japan:focus { border-color: var(--primary-blue); }
+        .btn-round { width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); color: white; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-round:hover { background: var(--accent-gold); }
 
         /* --- FOOTER --- */
-        footer { background: #1a1a1a; color: #888; padding: 60px 20px; text-align: center; }
-        .authors-list { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-
-        /* --- MEDIA QUERIES (RESPONSIVIDAD REAL) --- */
+        footer { background: var(--primary-blue); color: rgba(255,255,255,0.8); padding: 60px 20px; text-align: center; }
+        .authors-list { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.9rem; }
+        
         @media (max-width: 768px) {
-            /* Header Stackeado */
-            header { flex-direction: column; padding: 15px; gap: 15px; }
-            nav ul { gap: 15px; font-size: 0.85rem; }
-            
-            /* Texto Hero más pequeño */
+            header { flex-direction: row; padding: 10px 20px; }
+            .logo img { height: 40px; }
+            nav ul { gap: 15px; font-size: 0.8rem; }
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.1rem; }
-            
-            /* Ajuste de Secciones */
             .section { padding: 50px 20px; }
-            .section-header h2 { font-size: 2rem; }
-            
-            /* Grid a 1 columna para asegurar que se vea bien */
             .grid-japan { grid-template-columns: 1fr; }
-            
-            /* Formulario */
             .report-form { flex-direction: column; }
             .btn-round { width: 100%; border-radius: 10px; }
         }
@@ -104,7 +106,9 @@
 <body>
 
     <header>
-        <div class="logo">Guárico<span>TechTur</span></div>
+        <a href="/" class="logo">
+            <img src="/images/logo.jpg" alt="Guárico TechTur">
+        </a>
         <nav>
             <ul>
                 <li><a href="#destinos">Destinos</a></li>
@@ -150,7 +154,7 @@
         </div>
     </section>
 
-    <section id="servicios" class="section" style="background-color: #fafafa;">
+    <section id="servicios" class="section" style="background-color: #F7F9FB;">
         <div class="section-header">
             <h2>Experiencias Locales</h2>
             <div class="divider"></div>
@@ -168,7 +172,7 @@
                             <% if(servicio.promocion) { %> <span class="promo-badge">PROMO</span> <% } %>
                         </div>
                         <h3 class="card-title"><%= servicio.nombre %></h3>
-                        <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-clock"></i> <%= servicio.horario || 'Abierto hoy' %></p>
+                        <p style="font-size: 0.9rem; color: #666;"><i class="fas fa-clock" style="color: var(--accent-gold);"></i> <%= servicio.horario || 'Abierto hoy' %></p>
                     </div>
                 </a>
             <% }) %>
@@ -187,7 +191,9 @@
     </section>
 
     <footer>
-        <span class="logo" style="color: white;">GTT</span>
+        <div class="logo" style="margin-bottom: 10px;">
+            <img src="/images/logo.jpg" alt="GTT Logo" style="height: 40px; border-radius: 4px;">
+        </div>
         <div class="authors-list">
             <% autores.forEach(autor => { %> <span><%= autor.nombre %></span> <% }) %>
         </div>
@@ -197,7 +203,8 @@
     <script>
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
-            header.style.background = window.scrollY > 50 ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.95)';
+            header.style.background = window.scrollY > 50 ? 'rgba(44, 95, 120, 0.95)' : '#2C5F78';
+            header.style.boxShadow = window.scrollY > 50 ? '0 4px 15px rgba(0,0,0,0.2)' : '0 4px 12px rgba(44, 95, 120, 0.2)';
         });
     </script>
 </body>
